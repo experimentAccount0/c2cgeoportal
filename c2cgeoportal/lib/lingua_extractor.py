@@ -218,7 +218,7 @@ class GeoMapfishConfigExtractor(Extractor):  # pragma: no cover
                 values = cls._enumerate_attributes_values(DBSessions, Layers, layerinfos, fieldname)
                 for value, in values:
                     if value != "":
-                        msgid = value if isinstance(value, str) else str(value)
+                        msgid = value if isinstance(value, str) else value
                         location = "/layers/{0!s}/values/{1!s}/{2!s}".format(
                             layername,
                             fieldname,

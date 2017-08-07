@@ -64,7 +64,7 @@ class Proxy:
         all_params.update(params)
         params_encoded = {}
         for k, v in all_params.items():
-            params_encoded[k] = str(v).encode("utf-8")
+            params_encoded[k] = v.encode("utf-8")
         query_string = urllib.parse.urlencode(params_encoded)
 
         if parsed_url.port is None:
@@ -230,7 +230,7 @@ class Proxy:
     @staticmethod
     def _get_lower_params(params):
         return dict(
-            (k.lower(), str(v).lower()) for k, v in params.items()
+            (k.lower(), v.lower()) for k, v in params.items()
         )
 
     def _get_headers(self):

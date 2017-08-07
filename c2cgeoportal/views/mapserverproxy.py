@@ -209,7 +209,7 @@ class MapservProxy(OGCProxy):
         if callback is not None:
             content_type = "application/javascript"
             # escape single quotes in the JavaScript string
-            content = str(content.decode("utf8"))
+            content = content.decode("utf8")
             content = content.replace("'", "\\'")
             content = "{0!s}('{1!s}');".format(callback, " ".join(content.splitlines()))
         else:

@@ -136,13 +136,13 @@ def dbfwriter(f, fieldnames, fieldspecs, records):
         f.write(" ")                        # deletion flag
         for (typ, size, deci), value in zip(fieldspecs, record):
             if typ == "N":
-                value = str(value).rjust(size, " ")
+                value = value.rjust(size, " ")
             elif typ == "D":
                 value = value.strftime("%Y%m%d")
             elif typ == "L":
-                value = str(value)[0].upper()
+                value = value[0].upper()
             else:
-                value = str(value)[:size].ljust(size, " ")
+                value = value[:size].ljust(size, " ")
             assert len(value) == size
             f.write(value)
 
