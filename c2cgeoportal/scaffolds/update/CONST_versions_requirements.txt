@@ -34,7 +34,7 @@ pyramid-debugtoolbar==4.3
 pyramid-mako==1.0.2
 pyramid-multiauth==0.9.0
 pyramid-tm==2.2
-pyramid_closure==1.1.0
+https://github.com/camptocamp/pyramid_closure/archive/7e95a50bdfc7f9b17d7882a6be41d8bf17067ec5.zip#egg=pyramid_closure
 python-dateutil==2.6.1
 pytz==2017.2
 repoze.lru==0.6
