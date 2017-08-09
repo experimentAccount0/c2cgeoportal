@@ -12,4 +12,5 @@ for file_ in files:
     print(file_)
     print(re1.sub(r"\1.so", file_))
     print(re2.sub(r"\1.so", file_))
+    print(["ln", "-s", re2.sub(r"\1.so", file_), re1.sub(r"\1.so", file_)])
     subprocess.check_call(["ln", "-s", re2.sub(r"\1.so", file_), re1.sub(r"\1.so", file_)])
