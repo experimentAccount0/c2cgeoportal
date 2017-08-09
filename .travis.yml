@@ -3,7 +3,7 @@ sudo: required
 
 language: python
 python:
-- "3.6"
+- "3.5"
 
 env:
   global:
@@ -12,8 +12,8 @@ env:
 before_install:
 - virtualenv --python python3 .
 - bin/pip install pycrypto
-- ls -al lib/python3.6/site-packages/Crypto/Cipher/
-- ldd lib/python3.6/site-packages/Crypto/Cipher/_AES.cpython-36m-x86_64-linux-gnu.so
+- ls -al lib/python3.5/site-packages/Crypto/Cipher/
+- ldd lib/python3.5/site-packages/Crypto/Cipher/_AES.cpython-36m-x86_64-linux-gnu.so
 - bin/python test2.py
 
 
@@ -95,9 +95,9 @@ script:
 - cd $TRAVIS_FOLDER
 - travis/no-make-error.sh /tmp/travis/testgeomapfish -f travis.mk help
 - find /tmp/travis/testgeomapfish/setup.py /tmp/travis/testgeomapfish/testgeomapfish/*.py /tmp/travis/testgeomapfish/testgeomapfish/views -name \*.py | xargs travis/quote
-- ls -al /tmp/travis/testgeomapfish/.build/venv/lib/python3.6/site-packages/Crypto/Cipher/
-- ldd /tmp/travis/testgeomapfish/.build/venv/lib/python3.6/site-packages/Crypto/Cipher/_AES.cpython-36m-x86_64-linux-gnu.so
-- ln -s /tmp/travis/testgeomapfish/.build/venv/lib/python3.6/site-packages/Crypto/Cipher/_AES.cpython-36m-x86_64-linux-gnu.so /tmp/travis/testgeomapfish/.build/venv/lib/python3.6/site-packages/Crypto/Cipher/_AES.so
+- ls -al /tmp/travis/testgeomapfish/.build/venv/lib/python3.5/site-packages/Crypto/Cipher/
+- ldd /tmp/travis/testgeomapfish/.build/venv/lib/python3.5/site-packages/Crypto/Cipher/_AES.cpython-36m-x86_64-linux-gnu.so
+- ln -s /tmp/travis/testgeomapfish/.build/venv/lib/python3.5/site-packages/Crypto/Cipher/_AES.cpython-36m-x86_64-linux-gnu.so /tmp/travis/testgeomapfish/.build/venv/lib/python3.5/site-packages/Crypto/Cipher/_AES.so
 - travis/test-new-project wsgi/check_collector
 - travis/test-new-project wsgi/check_collector?type=all
 - travis/test-new-project wsgi/layers/test/values/type enum
