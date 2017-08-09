@@ -104,7 +104,7 @@ class Checker:  # pragma: no cover
         if resp.status != http.client.OK:
             print((list(resp.items())))
             self.set_status(resp.status, resp.reason)
-            return url + "<br/>" + content
+            return url + "<br/>" + content.decode("utf-8")
 
         return "OK"
 
