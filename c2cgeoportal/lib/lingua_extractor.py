@@ -158,7 +158,9 @@ class GeoMapfishAngularExtractor(Extractor):  # pragma: no cover
             except:
                 print((traceback.format_exc()))
 
-        message_str = subprocess.check_output(["node", "tools/extract-messages.js", int_filename]).decode("utf-8")
+        message_str = subprocess.check_output([
+            "node", "tools/extract-messages.js", int_filename
+        ]).decode("utf-8")
         if int_filename != filename:
             os.unlink(int_filename)
         try:
