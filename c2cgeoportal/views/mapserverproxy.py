@@ -195,6 +195,7 @@ class MapservProxy(OGCProxy):
         if callback is not None:
             del params["callback"]
         resp, content = self._proxy(url=url, params=params, **kwargs)
+        content = content.decode("utf8")
 
         if self.lower_params.get("request") == "getcapabilities":
             content = filter_capabilities(
@@ -209,7 +210,6 @@ class MapservProxy(OGCProxy):
         if callback is not None:
             content_type = "application/javascript"
             # escape single quotes in the JavaScript string
-            content = content.decode("utf8")
             content = content.replace("'", "\\'")
             content = "{0!s}('{1!s}');".format(callback, " ".join(content.splitlines()))
         else:

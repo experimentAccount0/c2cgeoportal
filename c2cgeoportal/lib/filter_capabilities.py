@@ -198,7 +198,7 @@ def filter_capabilities(content, role_id, wms, url, headers, proxies, request):
         layers_blacklist=private_layers
     )
     filter_handler.parse(StringIO(content))
-    return result.getvalue().decode("utf-8")
+    return result.getvalue()
 
 
 def filter_wfst_capabilities(content, role_id, wfs_url, proxies, request):
