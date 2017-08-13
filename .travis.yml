@@ -116,8 +116,8 @@ script:
 - ./docker-run make -f travis.mk c2cgeoportal/tests/functional/alembic.ini
 - ./docker-compose-run alembic --config c2cgeoportal/tests/functional/alembic.ini upgrade head
 - ./docker-compose-run alembic --config c2cgeoportal/tests/functional/alembic_static.ini upgrade head
-- ./docker-compose-run nosetests --with-cprofile --cprofile-stats-erase --cprofile-stats-file=profile_c2cgeoportal_5f7f781cf1_0
-- python -m properform Push 47.88.50.110:15554 asdf_c2cgeoportal_5f7f781cf1_0 ./profile_c2cgeoportal_5f7f781cf1_0
+- ./docker-compose-run nosetests --with-cprofile --cprofile-stats-erase --cprofile-stats-file=profile_c2cgeoportal_5f7f781cf1_1
+- python -m properform Push 47.88.50.110:15554 asdf_c2cgeoportal_5f7f781cf1_1 ./profile_c2cgeoportal_5f7f781cf1_1
 
 
 after_success:
@@ -134,4 +134,4 @@ after_success:
     travis/doc.sh
   fi
 
- #2017-08-13 16:49:31 modified at 0
+ #2017-08-13 16:49:31 modified at 0 #2017-08-13 16:49:36 modified at 1
