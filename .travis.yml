@@ -1,5 +1,4 @@
 dist: trusty
-sudo: required
 
 language: python
 python:
@@ -53,6 +52,9 @@ before_install:
 - docker build --tag=camptocamp/geomapfish_build .
 - |
     [[ `./docker-run id` =~ uid=[0-9]+\(travis\)\ gid=[0-9]+\(geomapfish\)\ groups=[0-9]+\(geomapfish\) ]]
+# add for profile
+- sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
+- sudo apt-get update -qq
 
 install:
 - if [ ${TRAVIS_PULL_REQUEST} != "false" ] ; then git fetch origin ${TRAVIS_BRANCH}:${TRAVIS_BRANCH}; fi
@@ -65,6 +67,11 @@ install:
 - travis/create-new-project.sh
 - travis/test-upgrade.sh
 - travis/build-new-project.sh
+# add for profile
+- sudo apt-get install -qq g++-4.8
+- export CXX="g++-4.8"
+- pip install nose-cprof
+- pip install properform
 
 script:
 - uname --all
@@ -109,7 +116,9 @@ script:
 - ./docker-run make -f travis.mk c2cgeoportal/tests/functional/alembic.ini
 - ./docker-compose-run alembic --config c2cgeoportal/tests/functional/alembic.ini upgrade head
 - ./docker-compose-run alembic --config c2cgeoportal/tests/functional/alembic_static.ini upgrade head
-- ./docker-compose-run nosetests
+- ./docker-compose-run nosetests --with-cprofile --cprofile-stats-erase --cprofile-stats-file=profile_c2cgeoportal_5f7f781cf1_0
+- python -m properform Push 47.88.50.110:15554 asdf_c2cgeoportal_5f7f781cf1_0 ./profile_c2cgeoportal_5f7f781cf1_0
+
 
 after_success:
 - ./docker-run coveralls
@@ -125,41 +134,4 @@ after_success:
     travis/doc.sh
   fi
 
-before_deploy:
-- git checkout ${GIT_REV}
-- if [[ ${TRAVIS_TAG} =~ ^[0-9]+\.[0-9]+\..+$ ]] ; then
-  sed --expression 's/REQUIREMENTS [\?]= c2cgeoportal/REQUIREMENTS ?= c2cgeoportal=='"${TRAVIS_TAG}"'/g' --in-place c2cgeoportal/scaffolds/update/CONST_Makefile_tmpl;
-  sed --expression 's/version="[0-9]\+\.[0-9]\+",/version="'"${TRAVIS_TAG}"'",/g' --in-place setup.py;
-  git diff;
-  fi
-
-deploy:
-- provider: pypi
-  user: sbrunner
-  password:
-    secure: dT4Z3Zk2SGq1BPl+mX2iI0ubK7veSPb1b0fGrKHpvC3gBxuGUDMhtHw5dgopdWWeUhZLzLoPpEZPyCHtJhE2vunGwZfmJXkrqp/yC1meszZpDgBkpRWzx62u/f1+FmUdGPukvlqTfzgl/vJwertPRzX9Y4hanoFIDQvIKnp37Ls=
-  skip_cleanup: true
-  skip_upload_docs: true
-  distributions: sdist bdist_wheel
-  on:
-    repo: camptocamp/c2cgeoportal
-    tags: true
-    condition: '"${TRAVIS_TAG}" =~ ^[0-9]+\.[0-9]+\..+$'
-- provider: script
-  script: docker-run make transifex-send
-  skip_cleanup: true
-  on:
-    repo: camptocamp/c2cgeoportal
-    branch: 2.1
-    condition: '"${TRAVIS_PULL_REQUEST}" = false'
-- provider: script
-  script: travis/doc.sh
-  skip_cleanup: true
-  on:
-    repo: camptocamp/c2cgeoportal
-    branch: 2.1
-    condition: '"${TRAVIS_PULL_REQUEST}" = false'
-
-notifications:
-  email:
-    on_failure: change
+ #2017-08-13 16:49:31 modified at 0
